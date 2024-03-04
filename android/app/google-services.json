@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "716972217713",
+    "firebase_url": "https://brain-tumor-detector1685-default-rtdb.firebaseio.com",
+    "project_id": "brain-tumor-detector1685",
+    "storage_bucket": "brain-tumor-detector1685.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:716972217713:android:11299775d01ef7609792d0",
+        "android_client_info": {
+          "package_name": "com.example.brain_tumor_detector"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "716972217713-r2ttevcgeb0l7rms81745ua2l9cn5dta.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.brain_tumor_detector",
+            "certificate_hash": "83290cf454bff937c6d966fc00f8cfc03e091fbb"
+          }
+        },
+        {
+          "client_id": "716972217713-pafjmmpg4m94cofhs2nhpnqq5tbo0m1j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-uGk1KSh1uDA-hws-8m7xNjH8AsLAE7w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "716972217713-5650g2vkkn9le7gmg1nnadfkkce8ho0s.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "716972217713-2s68205drgrc53sa8gt288rg0qatr0iu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.brainTumorDetector.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
