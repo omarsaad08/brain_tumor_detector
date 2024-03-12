@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:brain_tumor_detector/final_version/detection_history.dart';
+import 'package:brain_tumor_detector/final_version/detection_result.dart';
 import 'package:brain_tumor_detector/screens/history.dart';
 import 'package:brain_tumor_detector/screens/home.dart';
 import 'package:brain_tumor_detector/screens/signup.dart';
@@ -23,7 +25,7 @@ void main() async {
   );
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    theme: ThemeData(fontFamily: "Arial"),
+    theme: ThemeData(fontFamily: "Rubik"),
     // home: FirebaseAuth.instance.currentUser == null ? Login() : Home(),
     home: onboardingShown ? login_test() : OnBoarding(),
     // home: OnBoarding(),
@@ -35,7 +37,9 @@ void main() async {
       '/home': (context) => Home(),
       '/history': (context) => History(),
       '/login_test': (context) => login_test(),
-      '/diagnose_result': (context) => Result()
+      '/diagnose_result': (context) => Result(),
+      '/detection_result': (context) => DetectionResult(),
+      '/detection_history': (context) => DetectionHistory()
     },
   ));
 }

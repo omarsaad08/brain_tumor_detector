@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously
 
+import 'package:brain_tumor_detector/final_version/detection_history.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -20,7 +21,7 @@ class _HomeState extends State<Home> {
   List<Widget> routes = [
     Welcome(),
     DetectTumor(),
-    History(),
+    DetectionHistory(),
     SettingsScreen(),
   ];
   int _selectedIndex = 0;

@@ -15,6 +15,8 @@ class CustomTextForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      cursorColor: Colors.white,
+      style: TextStyle(color: Colors.white),
       obscureText: obsecure,
       controller: controller,
       decoration: InputDecoration(
@@ -23,10 +25,9 @@ class CustomTextForm extends StatelessWidget {
             fontSize: 14.0, fontWeight: FontWeight.normal, color: Colors.white),
         border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
-            // gapPadding: 0,
             borderSide: BorderSide.none),
         filled: true,
-        fillColor: Color(0xFF344372),
+        fillColor: Color(0xFF333333),
       ),
     );
   }
