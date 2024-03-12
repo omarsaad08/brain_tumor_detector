@@ -33,8 +33,14 @@ class _DetectionHistoryState extends State<DetectionHistory> {
       future: fetchPatients(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(
-              child: CircularProgressIndicator(color: Color(0xFF0E697C)));
+          return Container(
+            color: Color(0xff222222),
+            child: Center(
+              child: CircularProgressIndicator(
+                color: Color(0xff06C892),
+              ),
+            ),
+          );
         } else {
           return Container(
             color: Color(0xff222222),
