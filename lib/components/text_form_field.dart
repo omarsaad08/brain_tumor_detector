@@ -15,19 +15,20 @@ class CustomTextForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      cursorColor: Colors.white,
-      style: TextStyle(color: Colors.white),
+      cursorColor: Colors.black,
+      style: TextStyle(color: Colors.black),
       obscureText: obsecure,
       controller: controller,
       decoration: InputDecoration(
-        hintText: "  " + hintText,
+        contentPadding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+        hintText: hintText,
         hintStyle: TextStyle(
-            fontSize: 14.0, fontWeight: FontWeight.normal, color: Colors.white),
+            fontSize: 14.0, fontWeight: FontWeight.normal, color: Colors.black),
         border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(50),
             borderSide: BorderSide.none),
         filled: true,
-        fillColor: Color(0xFF333333),
+        fillColor: Color(0xFFeeeeee),
       ),
     );
   }

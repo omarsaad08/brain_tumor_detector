@@ -2,6 +2,9 @@
 
 import 'package:brain_tumor_detector/final_version/detection_history.dart';
 import 'package:brain_tumor_detector/final_version/detection_result.dart';
+import 'package:brain_tumor_detector/final_version/linkPatient.dart';
+import 'package:brain_tumor_detector/final_version/orgSetup.dart';
+import 'package:brain_tumor_detector/final_version/signupConfig.dart';
 import 'package:brain_tumor_detector/screens/history.dart';
 import 'package:brain_tumor_detector/screens/home.dart';
 import 'package:brain_tumor_detector/screens/signup.dart';
@@ -19,7 +22,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  bool onboardingShown = prefs.getBool('onboardingShown') ?? false;
+  // bool onboardingShown = prefs.getBool('onboardingShown') ?? false;
+  bool onboardingShown = false;
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -39,8 +43,18 @@ void main() async {
       '/login_test': (context) => login_test(),
       '/diagnose_result': (context) => Result(),
       '/detection_result': (context) => DetectionResult(),
-      '/detection_history': (context) => DetectionHistory()
+      '/detection_history': (context) => DetectionHistory(),
+      '/signupConfig': (context) => SignUpConfig(),
+      '/linkPatient': (context) => LinkPatient(),
+      '/orgSetup': (context) => OrgSetup()
     },
   ));
 }
-// main color: Color(0xFF344372)
+// 
+/*
+  main font: Rubik
+  secondary font: ebGaramont
+
+  appbar text fontsize: 20
+  header fontsize: 28
+*/

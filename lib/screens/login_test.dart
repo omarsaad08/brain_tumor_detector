@@ -74,16 +74,17 @@ class _login_testState extends State<login_test> {
     return Scaffold(
       body: Container(
         width: double.infinity,
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                colors: [
-                  Color(0xFF344372),
-                  Color.fromARGB(255, 75, 97, 165),
-                  Color.fromARGB(255, 89, 116, 197),
-                  Color.fromARGB(255, 131, 160, 247),
-                ],
-                end: Alignment.bottomRight)),
+        color: Color(0xff222222),
+        // decoration: BoxDecoration(
+        //     gradient: LinearGradient(
+        //         begin: Alignment.topLeft,
+        //         colors: [
+        //           Color(0xFF344372),
+        //           Color.fromARGB(255, 75, 97, 165),
+        //           Color.fromARGB(255, 89, 116, 197),
+        //           Color.fromARGB(255, 131, 160, 247),
+        //         ],
+        //         end: Alignment.bottomRight)),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           SizedBox(
             height: 60,
@@ -94,7 +95,10 @@ class _login_testState extends State<login_test> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text("Login",
-                    style: TextStyle(color: Colors.white, fontSize: 36)),
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 36,
+                        fontWeight: FontWeight.bold)),
               ],
             ),
           ),
@@ -118,13 +122,9 @@ class _login_testState extends State<login_test> {
                           Container(
                             width: 160,
                             height: 160,
-                            child: ColorFiltered(
-                              colorFilter: ColorFilter.mode(
-                                  Color(0xFF344372), BlendMode.color),
-                              child: Image(
-                                  image: AssetImage("assets/brain.jpg"),
-                                  fit: BoxFit.cover),
-                            ),
+                            child: Image(
+                                image: AssetImage("assets/brain.jpg"),
+                                fit: BoxFit.cover),
                           ),
                         ],
                       ),
@@ -132,10 +132,22 @@ class _login_testState extends State<login_test> {
                       SizedBox(
                         height: 5,
                       ),
-                      CustomTextForm(
-                          controller: email,
-                          hintText: "Enter Your Email",
-                          obsecure: false),
+                      TextFormField(
+                        cursorColor: Colors.black,
+                        style: TextStyle(color: Colors.black),
+                        obscureText: false,
+                        controller: email,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(
+                              horizontal: 25, vertical: 15),
+                          prefixIcon: Icon(Icons.mail),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: BorderSide.none),
+                          filled: true,
+                          fillColor: Color(0xFFeeeeee),
+                        ),
+                      ),
                       SizedBox(
                         height: 20,
                       ),
@@ -143,10 +155,22 @@ class _login_testState extends State<login_test> {
                       SizedBox(
                         height: 5,
                       ),
-                      CustomTextForm(
-                          controller: password,
-                          hintText: "Enter Your Password",
-                          obsecure: true),
+                      TextFormField(
+                        cursorColor: Colors.black,
+                        style: TextStyle(color: Colors.black),
+                        obscureText: true,
+                        controller: password,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(
+                              horizontal: 25, vertical: 15),
+                          prefixIcon: Icon(Icons.key_sharp),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: BorderSide.none),
+                          filled: true,
+                          fillColor: Color(0xFFeeeeee),
+                        ),
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -154,7 +178,7 @@ class _login_testState extends State<login_test> {
                             child: Text(
                               "Register",
                               style: TextStyle(
-                                  color: Color(0xFF344372),
+                                  color: Color(0xFF000000),
                                   fontWeight: FontWeight.normal),
                             ),
                             onPressed: () {
@@ -176,34 +200,12 @@ class _login_testState extends State<login_test> {
                         child: FilledButton(
                           child: Text(
                             "Login",
-                            style: TextStyle(fontSize: 12.0),
+                            style: TextStyle(fontSize: 16.0),
                           ),
                           onPressed: login,
                           style: ButtonStyle(
                               backgroundColor: MaterialStatePropertyAll<Color>(
-                                  Color(0xFF344372)),
-                              shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ))),
-                        ),
-                      ),
-                      Container(
-                        width: double.infinity,
-                        child: FilledButton.icon(
-                          label: Text(
-                            "Login with Google",
-                            style: TextStyle(fontSize: 12.0),
-                          ),
-                          icon: Container(
-                              height: 30,
-                              width: 30,
-                              child: Image.asset('assets/google-icon.png')),
-                          onPressed: signInWithGoogle,
-                          style: ButtonStyle(
-                              backgroundColor: MaterialStatePropertyAll<Color>(
-                                  Color(0xFF344372)),
+                                  Color(0xFF222222)),
                               shape: MaterialStateProperty.all<
                                       RoundedRectangleBorder>(
                                   RoundedRectangleBorder(

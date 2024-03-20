@@ -24,7 +24,7 @@ class _SignUpState extends State<SignUp> {
           email: email.text, password: password.text);
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text("Registered Successfuly")));
-      Navigator.of(context).pushReplacementNamed('/home');
+      Navigator.of(context).pushReplacementNamed('/signupConfig');
     } catch (e) {
       print(e);
     }
@@ -59,16 +59,7 @@ class _SignUpState extends State<SignUp> {
     return Scaffold(
       body: Container(
         width: double.infinity,
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                colors: [
-                  Color(0xFF344372),
-                  Color.fromARGB(255, 75, 97, 165),
-                  Color.fromARGB(255, 89, 116, 197),
-                  Color.fromARGB(255, 131, 160, 247),
-                ],
-                end: Alignment.bottomRight)),
+        color: Color(0xff222222),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           SizedBox(
             height: 60,
@@ -79,12 +70,15 @@ class _SignUpState extends State<SignUp> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text("Sign Up",
-                    style: TextStyle(color: Colors.white, fontSize: 36)),
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 36,
+                        fontWeight: FontWeight.bold)),
               ],
             ),
           ),
           SizedBox(
-            height: 40,
+            height: 20,
           ),
           Expanded(
             child: Container(
@@ -94,7 +88,7 @@ class _SignUpState extends State<SignUp> {
                         topLeft: Radius.circular(40),
                         topRight: Radius.circular(40))),
                 child: Padding(
-                  padding: EdgeInsets.all(25),
+                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
                   child: ListView(
                     children: [
                       Row(
@@ -113,10 +107,22 @@ class _SignUpState extends State<SignUp> {
                       SizedBox(
                         height: 5,
                       ),
-                      CustomTextForm(
-                          controller: email,
-                          hintText: "Enter Your Email",
-                          obsecure: false),
+                      TextFormField(
+                        cursorColor: Colors.black,
+                        style: TextStyle(color: Colors.black),
+                        obscureText: false,
+                        controller: email,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(
+                              horizontal: 25, vertical: 15),
+                          prefixIcon: Icon(Icons.mail),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: BorderSide.none),
+                          filled: true,
+                          fillColor: Color(0xFFeeeeee),
+                        ),
+                      ),
                       SizedBox(
                         height: 20,
                       ),
@@ -124,10 +130,22 @@ class _SignUpState extends State<SignUp> {
                       SizedBox(
                         height: 5,
                       ),
-                      CustomTextForm(
-                          controller: password,
-                          hintText: "Enter Your Password",
-                          obsecure: true),
+                      TextFormField(
+                        cursorColor: Colors.black,
+                        style: TextStyle(color: Colors.black),
+                        obscureText: true,
+                        controller: password,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(
+                              horizontal: 25, vertical: 15),
+                          prefixIcon: Icon(Icons.key_sharp),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: BorderSide.none),
+                          filled: true,
+                          fillColor: Color(0xFFeeeeee),
+                        ),
+                      ),
                       SizedBox(
                         height: 20,
                       ),
@@ -135,10 +153,22 @@ class _SignUpState extends State<SignUp> {
                       SizedBox(
                         height: 5,
                       ),
-                      CustomTextForm(
-                          controller: password,
-                          hintText: "Enter Your Password",
-                          obsecure: true),
+                      TextFormField(
+                        cursorColor: Colors.black,
+                        style: TextStyle(color: Colors.black),
+                        obscureText: true,
+                        controller: passwordConfirmation,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(
+                              horizontal: 25, vertical: 15),
+                          prefixIcon: Icon(Icons.key_sharp),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: BorderSide.none),
+                          filled: true,
+                          fillColor: Color(0xFFeeeeee),
+                        ),
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -146,7 +176,7 @@ class _SignUpState extends State<SignUp> {
                             child: Text(
                               "Login",
                               style: TextStyle(
-                                  color: Color(0xFF344372),
+                                  color: Color(0xFF000000),
                                   fontWeight: FontWeight.normal),
                             ),
                             onPressed: () {
@@ -168,34 +198,12 @@ class _SignUpState extends State<SignUp> {
                         child: FilledButton(
                           child: Text(
                             "Sign Up!",
-                            style: TextStyle(fontSize: 12.0),
+                            style: TextStyle(fontSize: 16.0),
                           ),
                           onPressed: register,
                           style: ButtonStyle(
                               backgroundColor: MaterialStatePropertyAll<Color>(
-                                  Color(0xFF344372)),
-                              shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ))),
-                        ),
-                      ),
-                      Container(
-                        width: double.infinity,
-                        child: FilledButton.icon(
-                          label: Text(
-                            "Login with Google",
-                            style: TextStyle(fontSize: 12.0),
-                          ),
-                          icon: Container(
-                              height: 30,
-                              width: 30,
-                              child: Image.asset('assets/google-icon.png')),
-                          onPressed: signInWithGoogle,
-                          style: ButtonStyle(
-                              backgroundColor: MaterialStatePropertyAll<Color>(
-                                  Color(0xFF344372)),
+                                  Color(0xFF222222)),
                               shape: MaterialStateProperty.all<
                                       RoundedRectangleBorder>(
                                   RoundedRectangleBorder(

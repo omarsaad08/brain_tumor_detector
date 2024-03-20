@@ -5,13 +5,18 @@
 // import 'dart:convert';
 import 'dart:io';
 // import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import '../services/database.dart';
 import '../components/text_form_field.dart';
+
+final userDB = DatabaseService(user: FirebaseAuth.instance.currentUser!);
 
 final storage = FirebaseStorage.instance;
 final storageRef = storage.ref().child("images");
@@ -25,7 +30,8 @@ class DetectTumor extends StatefulWidget {
 
 class _DetectTumorState extends State<DetectTumor> {
   TextEditingController nameController = TextEditingController();
-  final user = FirebaseAuth.instance.currentUser;
+  TextEditingController emailController = TextEditingController();
+  TextEditingController ageController = TextEditingController();
   File? selectedImage;
   Future pickImageFromGallery() async {
     final resultImage =
@@ -37,32 +43,15 @@ class _DetectTumorState extends State<DetectTumor> {
   }
 
   Future uploadImage() async {
-    storageRef
-        .child("${user!.uid}-${nameController.text}.jpg")
-        .putFile(selectedImage!);
-    print("photo sent");
-    var formData = FormData.fromMap(
-        {'path': 'images/${user!.uid}-${nameController.text}.jpg'});
-    if (nameController.text != '') {
-      try {
-        print("tryinggggg");
-        Response response = await Dio().post(
-            "https://tumordetector-fbcf91d4acbc.herokuapp.com/submit_path",
-            data: formData);
-        print(response.data['prediction']);
-        print(response.data['FireBasePath']);
-        final userDatabase = DatabaseService(uid: user?.uid);
-        userDatabase.updateUserData(
-            nameController.text,
-            "${date.day}/${date.month}/${date.year}",
-            response.data['prediction']);
-      } catch (e) {
-        print("error caught yasta: $e");
-      }
-    } else if (selectedImage != null) {
-      print("please select the MR image");
-    } else {
-      print("please enter a name and a date");
+    try {
+      await userDB.detectTumor(nameController.text,
+          '${date.day}/${date.month}/${date.year}', selectedImage);
+      Navigator.pushNamed(context, '/detection_result',
+          arguments: nameController.text);
+      userDB.changeDoctorsPatients();
+    } catch (e) {
+      print("there is an error: ${e}");
+      print("is doctor: ${userDB.isDoctor}");
     }
   }
 
@@ -83,37 +72,182 @@ class _DetectTumorState extends State<DetectTumor> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 43, 55, 93),
-      body: Center(
+      backgroundColor: Color(0xfffafafa),
+      body: SafeArea(
         child: Container(
-          padding: EdgeInsets.symmetric(vertical: 30.0, horizontal: 30.0),
+          padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Detect the Tumor",
+                "Detect The Tumor",
                 style: TextStyle(
-                    fontSize: 22,
+                    fontSize: 28,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white),
+                    color: Colors.black),
               ),
+              SizedBox(height: 20),
+              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+                Expanded(
+                  child: Column(children: [
+                    Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                            color: Color(0xff222222),
+                            border:
+                                Border.all(color: Color(0xff555555), width: 3)),
+                        width: 50,
+                        height: 50,
+                        child: Center(
+                            child: Text("1",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold)))),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text("Fill Patient's Info ", style: TextStyle(fontSize: 12))
+                  ]),
+                ),
+                Expanded(
+                  child: Column(children: [
+                    Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                            color: Color(0xff222222),
+                            border:
+                                Border.all(color: Color(0xff555555), width: 3)),
+                        width: 50,
+                        height: 50,
+                        child: Center(
+                            child: Text("2",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold)))),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text("Upload The MRI", style: TextStyle(fontSize: 12))
+                  ]),
+                ),
+                Expanded(
+                  child: Column(children: [
+                    Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                            color: Color(0xff222222),
+                            border:
+                                Border.all(color: Color(0xff555555), width: 3)),
+                        width: 50,
+                        height: 50,
+                        child: Center(
+                            child: Text("3",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold)))),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text("Get Instant Result!", style: TextStyle(fontSize: 12))
+                  ]),
+                ),
+              ]),
               SizedBox(
-                height: 30,
+                height: 20,
               ),
-              CustomTextForm(
-                  controller: nameController,
-                  hintText: "Patient Name",
-                  obsecure: false),
+              Text("Patient Name",
+                  style: TextStyle(fontWeight: FontWeight.bold)),
+              SizedBox(height: 5),
+              TextFormField(
+                cursorColor: Colors.black,
+                style: TextStyle(color: Colors.black),
+                obscureText: false,
+                controller: nameController,
+                decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.person),
+                  contentPadding:
+                      EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide.none),
+                  filled: true,
+                  fillColor: Color(0xFFeeeeee),
+                ),
+              ),
+              SizedBox(height: 10),
+              Text("Email", style: TextStyle(fontWeight: FontWeight.bold)),
+              SizedBox(height: 5),
+              TextFormField(
+                cursorColor: Colors.black,
+                style: TextStyle(color: Colors.black),
+                obscureText: false,
+                controller: emailController,
+                decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.mail),
+                  contentPadding:
+                      EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide.none),
+                  filled: true,
+                  fillColor: Color(0xFFeeeeee),
+                ),
+              ),
+              SizedBox(height: 10),
+              Text("Age", style: TextStyle(fontWeight: FontWeight.bold)),
+              SizedBox(height: 5),
+              TextFormField(
+                cursorColor: Colors.black,
+                style: TextStyle(color: Colors.black),
+                obscureText: false,
+                controller: ageController,
+                decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.numbers),
+                  contentPadding:
+                      EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide.none),
+                  filled: true,
+                  fillColor: Color(0xFFeeeeee),
+                ),
+              ),
               SizedBox(
                 height: 10,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  TextButton(
-                    onPressed: pickDate,
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     TextButton(
+              //       onPressed: pickDate,
+              //       child: Text(
+              //         "Pick image date",
+              //         style: TextStyle(
+              //             color: Colors.white, fontWeight: FontWeight.normal),
+              //       ),
+              //       style: ElevatedButton.styleFrom(
+              //           padding:
+              //               EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+              //           elevation: 0.0,
+              //           backgroundColor: Color(0xff222222),
+              //           shape: RoundedRectangleBorder(
+              //               borderRadius: BorderRadius.circular(50))),
+              //     ),
+              //     Text(
+              //       "${date.day}/${date.month}/${date.year}",
+              //       style: TextStyle(color: Colors.black),
+              //     )
+              //   ],
+              // ),
+              SizedBox(
+                height: 10,
+              ),
+              Row(children: [
+                Expanded(
+                  child: TextButton(
+                    onPressed: pickImageFromGallery,
                     child: Text(
-                      "Pick a date",
+                      "Pick Image from Gallery",
                       style: TextStyle(
                           color: Colors.white, fontWeight: FontWeight.normal),
                     ),
@@ -121,60 +255,45 @@ class _DetectTumorState extends State<DetectTumor> {
                         padding:
                             EdgeInsets.symmetric(vertical: 10, horizontal: 30),
                         elevation: 0.0,
-                        backgroundColor: Color(0xFF344372),
+                        backgroundColor: Color(0xFF222222),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10))),
                   ),
-                  Text(
-                    "${date.day}/${date.month}/${date.year}",
-                    style: TextStyle(color: Colors.white),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              TextButton(
-                onPressed: pickImageFromGallery,
-                child: Text(
-                  "Pick MR Image from Gallery",
-                  style: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.normal),
                 ),
-                style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
-                    elevation: 0.0,
-                    backgroundColor: Color(0xFF344372),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10))),
+                SizedBox(width: 10),
+                TextButton(
+                  onPressed: uploadImage,
+                  child: Text(
+                    "Submit",
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.normal),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+                      elevation: 0.0,
+                      backgroundColor: Color(0xFF222222),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10))),
+                ),
+              ]),
+              SizedBox(
+                height: 10.0,
               ),
               SizedBox(
                 height: 10.0,
               ),
-              selectedImage != null
-                  ? Image.file(
-                      selectedImage!,
-                      height: 150,
-                    )
-                  : Text("Please Select an Image",
-                      style: TextStyle(color: Colors.white)),
-              SizedBox(
-                height: 10.0,
-              ),
-              TextButton(
-                onPressed: uploadImage,
-                child: Text(
-                  "Submit",
-                  style: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.normal),
-                ),
-                style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
-                    elevation: 0.0,
-                    backgroundColor: Color(0xFF344372),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10))),
-              ),
+              // selectedImage != null
+              //     ? Text("Image Selected!")
+              //     : Text("Please Select an Image",
+              //         style: TextStyle(color: Colors.black)),
+              // selectedImage != null
+              //     ? Image.file(
+              //         selectedImage!,
+              //         height: 150,
+              //       )
+              //     : Text("Please Select an Image",
+              //         style: TextStyle(color: Colors.black)),
             ],
           ),
         ),

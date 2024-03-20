@@ -18,27 +18,78 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  FirebaseFirestore db = FirebaseFirestore.instance;
+
   List<Widget> routes = [
     Welcome(),
     DetectTumor(),
     DetectionHistory(),
     SettingsScreen(),
   ];
+  List<GButton> buttons = [
+    GButton(icon: Icons.home_filled, text: 'Home'),
+    GButton(icon: Icons.local_hospital, text: "Diagnose"),
+    GButton(icon: Icons.history, text: "History"),
+    GButton(icon: Icons.settings, text: "Settings"),
+  ];
+  // Future<void> checkRole() async {
+  //   try {
+  //     final data = await db
+  //         .collection(FirebaseAuth.instance.currentUser!.uid)
+  //         .doc("user")
+  //         .get();
+  //     print("${data.data()}");
+  //     if (data.data()!['type'] == "patient") {
+  //       routes = [
+  //         DetectTumor(),
+  //         DetectionHistory(),
+  //         SettingsScreen(),
+  //       ];
+  //       buttons = [
+  //         GButton(icon: Icons.local_hospital, text: "Diagnose"),
+  //         GButton(icon: Icons.history, text: "History"),
+  //         GButton(icon: Icons.settings, text: "Settings"),
+  //       ];
+  //     }
+  //     // setState(() {});
+  //   } catch (e) {
+  //     print("error caught: ${e}");
+  //   }
+  // }
+
   int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Tumora", style: TextStyle(color: Colors.white)),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text("Tumora",
+                style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20)),
+            SizedBox(width: 5),
+            Container(
+              width: 40,
+              child: Image.asset(
+                'assets/brain2.png',
+                fit: BoxFit.cover,
+              ),
+            )
+          ],
+        ),
         centerTitle: true,
-        backgroundColor: Color(0xFF344372),
+        backgroundColor: Color(0xFFfafafa),
         automaticallyImplyLeading: false,
+        // leading: Icon(Icons.menu),
       ),
       body: routes.elementAt(_selectedIndex),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
             // borderRadius: BorderRadius.circular(50),
-            color: Color(0xFF344372)),
+            color: Color(0xFFfafafa)),
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 12, vertical: 18),
           child: GNav(
@@ -48,17 +99,12 @@ class _HomeState extends State<Home> {
               });
             },
             selectedIndex: _selectedIndex,
-            color: Colors.white,
+            color: Colors.black,
             activeColor: Colors.white,
-            tabBackgroundColor: Color.fromARGB(255, 22, 29, 49),
+            tabBackgroundColor: Color(0xff222222),
             gap: 8,
             padding: EdgeInsets.all(12),
-            tabs: [
-              GButton(icon: Icons.home_filled, text: 'Home'),
-              GButton(icon: Icons.local_hospital, text: "Diagnose"),
-              GButton(icon: Icons.history, text: "History"),
-              GButton(icon: Icons.settings, text: "Settings"),
-            ],
+            tabs: buttons,
           ),
         ),
       ),

@@ -45,10 +45,10 @@ class _DetectionResultState extends State<DetectionResult> {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Container(
-            color: Color(0xff222222),
+            color: Color(0xfffafafa),
             child: Center(
               child: CircularProgressIndicator(
-                color: Color(0xff06C892),
+                color: Color(0xff000000),
               ),
             ),
           );
@@ -88,7 +88,7 @@ class _DetectionResultState extends State<DetectionResult> {
             )),
           ];
           return Container(
-            color: Color(0xff222222),
+            color: Color(0xfffafafa),
             child: SafeArea(
               child: Padding(
                 padding:
@@ -97,7 +97,7 @@ class _DetectionResultState extends State<DetectionResult> {
                   children: [
                     Container(
                       decoration: BoxDecoration(
-                          color: Color(0xFF06C892),
+                          color: Color(0xFF222222),
                           borderRadius: BorderRadius.circular(50)),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
@@ -129,7 +129,7 @@ class _DetectionResultState extends State<DetectionResult> {
                     Container(
                       width: double.infinity,
                       decoration: BoxDecoration(
-                          color: Color(0xFF5383FF),
+                          color: Color(0xFF222222),
                           borderRadius: BorderRadius.circular(10)),
                       child: Padding(
                         padding: EdgeInsets.all(12),
@@ -155,10 +155,10 @@ class _DetectionResultState extends State<DetectionResult> {
                           itemCount: 3,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) => Container(
-                            height: 100,
-                            width: 250,
+                            // height: 100,
+                            width: 280,
                             decoration: BoxDecoration(
-                                color: Color(0xFF5383FF),
+                                color: Color(0xFF222222),
                                 borderRadius: BorderRadius.circular(10)),
                             margin: EdgeInsets.all(10),
                             child: Padding(

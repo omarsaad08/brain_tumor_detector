@@ -22,6 +22,7 @@ class _DetectionHistoryState extends State<DetectionHistory> {
           .collection(FirebaseAuth.instance.currentUser!.uid)
           .get();
       patients = collection.docs.map((e) => e.id).toList();
+      patients.remove('user');
       print("document Ids: $patients");
     } catch (e) {}
   }
@@ -34,52 +35,51 @@ class _DetectionHistoryState extends State<DetectionHistory> {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Container(
-            color: Color(0xff222222),
+            color: Color(0xfffafafa),
             child: Center(
               child: CircularProgressIndicator(
-                color: Color(0xff06C892),
+                color: Color(0xff000000),
               ),
             ),
           );
         } else {
           return Container(
-            color: Color(0xff222222),
+            color: Color(0xfffafafa),
             child: SafeArea(
               child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        decoration: BoxDecoration(
-                            color: Color(0xFF06C892),
-                            borderRadius: BorderRadius.circular(50)),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text("History",
-                                  style: TextStyle(
-                                      fontSize: 26,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white)),
-                              IconButton(
-                                  onPressed: () {},
-                                  icon: Icon(
-                                    Icons.exit_to_app,
-                                    size: 36,
-                                    color: Colors.white,
-                                  ))
-                            ],
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 20),
-                      CustomTextForm(
+                      Row(children: [
+                        Text("History",
+                            style: TextStyle(
+                                fontSize: 28,
+                                fontWeight: FontWeight.w900,
+                                color: Color(0xff000000))),
+                        SizedBox(width: 16),
+                        Expanded(
+                            child: TextFormField(
+                          cursorColor: Colors.black,
+                          style: TextStyle(color: Colors.black),
+                          obscureText: false,
                           controller: searchController,
-                          hintText: "Search for a patient",
-                          obsecure: false),
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 25, vertical: 15),
+                            hintText: "Search for a patient",
+                            hintStyle: TextStyle(
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.normal,
+                                color: Colors.black),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(50),
+                                borderSide: BorderSide.none),
+                            filled: true,
+                            fillColor: Color(0xFFeeeeee),
+                          ),
+                        ))
+                      ]),
                       SizedBox(height: 40),
                       Expanded(
                         child: ListView.builder(
@@ -98,12 +98,15 @@ class _DetectionHistoryState extends State<DetectionHistory> {
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 10, vertical: 10),
                                 decoration: BoxDecoration(
-                                    color: Color(0xff5383FF),
+                                    color: Color(0xff222222),
                                     border: Border(
                                       left: BorderSide(
-                                          color: Color(0xFFDBDBDB), width: 4),
+                                          color: Color(0xFFeeeeee), width: 4),
                                     )),
-                                child: Text(patients[index],
+                                child: Text(
+                                    patients[index].replaceFirst(
+                                        patients[index][0],
+                                        patients[index][0].toUpperCase()),
                                     style: TextStyle(
                                         fontSize: 19, color: Colors.white)),
                               ),
