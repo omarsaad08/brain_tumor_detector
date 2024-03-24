@@ -7,7 +7,7 @@ class OnBoardingPage3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color(0xFF344372),
+      color: Color(0xfffafafa),
       child: Padding(
         padding: EdgeInsets.all(30),
         child: Column(
@@ -22,7 +22,7 @@ class OnBoardingPage3 extends StatelessWidget {
             SizedBox(height: 40),
             Text(
               "Get results quickly with high accuracy, helping in early detection and diagnosis.",
-              style: TextStyle(color: Colors.white, fontSize: 16),
+              style: TextStyle(fontSize: 16),
               textAlign: TextAlign.center,
             )
           ],

@@ -11,6 +11,7 @@ class DatabaseService {
   bool? isDoctor;
   Map<String, dynamic>? userData;
   Map<String, dynamic>? doctorData;
+  String? patientEmail;
   // late final CollectionReference usersCollection =
   //     FirebaseFirestore.instance.collection(uid!);
   DatabaseService({this.user}) {
@@ -34,8 +35,8 @@ class DatabaseService {
     print("isDoctor?: ${isDoctor}");
   }
 
-  Future<void> detectTumor(
-      String patientName, String diagnoseDate, File? image) async {
+  Future<void> detectTumor(String patientName, String patientEmail,
+      String diagnoseDate, File? image) async {
     try {
       print("user data: ${userData}");
       if (patientName != '') {
@@ -48,8 +49,22 @@ class DatabaseService {
         print(response.data['FireBasePath']);
         await db.collection(user!.uid).doc(patientName).set({
           'Diagnose Date': diagnoseDate,
-          'result': response.data['prediction']
+          'result': response.data['prediction'],
+          'segmentationPath': response.data['FireBasePath']
         });
+        if (!isDoctor!) {
+          await db.collection(doctorData!['uid']).doc(patientName).set({
+            'Diagnose Date': diagnoseDate,
+            'result': response.data['prediction'],
+            'segmentationPath': response.data['FireBasePath']
+          });
+        } else if (isDoctor!) {
+          await db.collection(doctorData!['uid']).doc(patientEmail).set({
+            'Diagnose Date': diagnoseDate,
+            'result': response.data['prediction'],
+            'segmentationPath': response.data['FireBasePath']
+          });
+        }
       }
     } catch (e) {
       print("db error:${e}");

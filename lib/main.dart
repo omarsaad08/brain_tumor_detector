@@ -23,7 +23,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   // bool onboardingShown = prefs.getBool('onboardingShown') ?? false;
-  bool onboardingShown = false;
+  bool onboardingShown = true;
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -52,6 +52,13 @@ void main() async {
 }
 // 
 /*
+  TODO:
+    - build the search patients feature
+    - build verify email feature
+    - put all database tasks in the DatabaseServices class
+    - forget password
+    - login validation
+    - detection data validation
   main font: Rubik
   secondary font: ebGaramont
 

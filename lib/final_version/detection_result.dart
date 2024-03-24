@@ -24,8 +24,9 @@ class _DetectionResultState extends State<DetectionResult> {
           .get();
       if (getDocument.exists) {
         patientData = getDocument.data() as Map<String, dynamic>;
-        final ref = FirebaseStorage.instance.ref().child(
-            "segmentation/${FirebaseAuth.instance.currentUser!.uid}-${patientName}-${patientData['result']}.jpg");
+        final ref = FirebaseStorage.instance
+            .ref()
+            .child(patientData['segmentationPath']);
         url = await ref.getDownloadURL();
         print('Document data: $patientData');
       } else {

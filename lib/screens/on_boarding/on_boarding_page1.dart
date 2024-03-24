@@ -8,7 +8,7 @@ class OnBoardingPage1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color(0xFF344372),
+      color: Color(0xfffafafa),
       child: Padding(
         padding: EdgeInsets.all(30),
         child: Column(
@@ -22,7 +22,7 @@ class OnBoardingPage1 extends StatelessWidget {
             SizedBox(height: 40),
             Text(
               "Welcome to Tumora! Your AI companion for detecting brain tumors using MR images.",
-              style: TextStyle(color: Colors.white, fontSize: 16),
+              style: TextStyle(fontSize: 16),
               textAlign: TextAlign.center,
             )
           ],

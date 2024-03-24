@@ -44,7 +44,7 @@ class _DetectTumorState extends State<DetectTumor> {
 
   Future uploadImage() async {
     try {
-      await userDB.detectTumor(nameController.text,
+      await userDB.detectTumor(nameController.text, emailController.text,
           '${date.day}/${date.month}/${date.year}', selectedImage);
       Navigator.pushNamed(context, '/detection_result',
           arguments: nameController.text);

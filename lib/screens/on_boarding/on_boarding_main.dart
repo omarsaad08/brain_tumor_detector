@@ -43,7 +43,9 @@ class _OnBoardingState extends State<OnBoarding> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 GestureDetector(
-                  child: Text("skip", style: TextStyle(color: Colors.white)),
+                  child: Text("skip",
+                      style: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.bold)),
                   onTap: () {
                     controller.jumpToPage(3);
                   },
@@ -51,12 +53,15 @@ class _OnBoardingState extends State<OnBoarding> {
                 SmoothPageIndicator(
                   controller: controller,
                   count: 4,
-                  effect: ExpandingDotsEffect(),
+                  effect:
+                      ExpandingDotsEffect(activeDotColor: Color(0xff222222)),
                 ),
                 (onLastPage)
                     ? GestureDetector(
-                        child:
-                            Text("done", style: TextStyle(color: Colors.white)),
+                        child: Text("done",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold)),
                         onTap: () async {
                           Navigator.pushNamed(context, "/login_test");
                           SharedPreferences prefs =
@@ -64,8 +69,10 @@ class _OnBoardingState extends State<OnBoarding> {
                           prefs.setBool('onboardingShown', true);
                         })
                     : GestureDetector(
-                        child:
-                            Text("next", style: TextStyle(color: Colors.white)),
+                        child: Text("next",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold)),
                         onTap: () {
                           controller.nextPage(
                               duration: Duration(milliseconds: 300),
