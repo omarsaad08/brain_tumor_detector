@@ -87,10 +87,8 @@ class _DetectionHistoryState extends State<DetectionHistory> {
                           itemBuilder: (context, index) {
                             return GestureDetector(
                               onTap: () {
-                                // from here u should Navigate to the result of the patient
                                 Navigator.pushNamed(
                                     context, '/detection_result',
-                                    // send the document id for the "tapped document"
                                     arguments: patients[index]);
                               },
                               child: Container(

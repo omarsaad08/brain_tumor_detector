@@ -26,11 +26,11 @@ class _DetectionResultState extends State<DetectionResult> {
         patientData = getDocument.data() as Map<String, dynamic>;
         final ref = FirebaseStorage.instance
             .ref()
-            .child(patientData['segmentationPath']);
+            .child(patientData["segmentationPath"]);
         url = await ref.getDownloadURL();
         print('Document data: $patientData');
       } else {
-        print('Document does not exist');
+        print('Document does NOT exist');
       }
     } catch (e) {
       print("error caught: $e");

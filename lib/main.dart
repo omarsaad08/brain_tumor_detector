@@ -53,12 +53,12 @@ void main() async {
 // 
 /*
   TODO:
-    - build the search patients feature
-    - build verify email feature
-    - put all database tasks in the DatabaseServices class
-    - forget password
-    - login validation
-    - detection data validation
+    [ ] build the search patients feature
+    [ ] build verify email feature
+    [ ] put all database tasks in the DatabaseServices class
+    [ ] forget password
+    [ ] login validation
+    [ ] detection data validation
   main font: Rubik
   secondary font: ebGaramont
 
